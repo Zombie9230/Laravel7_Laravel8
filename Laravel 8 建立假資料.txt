@@ -1,0 +1,78 @@
+Laravel 8 建立假資料
+
+1. 建立Migration
+
+php artisan make:migration create_test_table
+
+database\migrations\create_test_table.php
+
+public function up()
+{
+    Schema::create('test', function (Blueprint $table) {
+       $table->string('city');
+       $table->string('district');
+       $table->string('kind');
+     });
+}
+
+php artisan migrate 
+
+2. 建立Model
+
+php artisan make:model Test
+
+App\Models\Test.php
+
+protected $table = 'test';
+
+3. 建立Factory
+
+php artisan make:factory Test
+
+database\factories\TestFactory.php
+
+public function definition()
+{
+   return [
+      'city' => $this->faker->city,
+      'district' => $this->faker->streetName,
+      'kind' => $this->faker->cityPrefix,
+   ];
+}
+
+4. 設定
+
+database\factories\DatabaseSeeder.php
+
+public function run()
+{
+  \App\Models\Test::factory(10)->create();
+}
+
+5. php artisan db:seed 
+
+
+
+
+
+
+ps. 如果很堅持 要用 Seeder 的話 
+    新增 php artisan make:seeder TestSeeder 
+
+database\factories\TestSeeder.php
+
+public function run()
+{
+    \App\Models\Product::factory(10)->create();
+}
+
+database\factories\DatabaseSeeder.php
+
+public function run()
+{
+    $this->call([
+        ProductSeeder::class,
+    ]);
+}
+
+php artisan db:seed 

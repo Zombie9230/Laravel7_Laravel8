@@ -1,0 +1,54 @@
+建立資料表 以及 已有資料表加上其他欄位
+
+建立資料表
+
+1. php artisan make:migration create_tests_table
+
+database\migrations\create_tests_table.php
+
+public function up()
+{
+   Schema::table('tests', function (Blueprint $table) {
+     $table->id();
+     $table->string('title');
+     $table->string('content');
+     $table->timestamps();
+   });
+}
+
+public function down()
+{
+   Schema::dropIfExists('tests');
+}
+
+2. php artisan migrate
+
+資料表裡面目前有 
+id title content created_at updated_at 共 5 欄
+
+加上其他的欄位
+
+1. php artisan make:migration add_tests_table --table=tests
+
+database\migrations\add_tests_table.php
+
+public function up()
+{
+   Schema::table('tests', function (Blueprint $table) {
+     $table->string('image');
+   });
+}
+
+public function down()
+{
+   Schema::table('tests', function (Blueprint $table) {
+     $table->dropColumn('image');
+   });
+}
+
+2. php artisan migrate
+
+資料表裡面最後面多 image 欄位
+id title content created_at updated_at image 共 6 欄
+
+

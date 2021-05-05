@@ -1,0 +1,20 @@
+建立 Laravel 專案
+
+1. 安裝 Xampp 或 MAMP(Window都可以 Mac 建議MAMP)
+2. 安裝 Composer (Window直接點選安裝 Mac要使用終端機)
+3. 安裝完成後 輸入 composer 有很大的 Composer字 即可 (Window在Terminal Mac要使用終端機)
+4. 建立 laravel 專案
+   
+   composer create-project laravel/laravel 是固定的打法不會變 
+
+   composer create-project laravel/laravel blog 
+   (Composer 會直接抓 larval最新版 blog是資料夾名稱 可以自行更改)
+   composer create-project laravel/laravel blog "7.1"
+   (Composer 會直接抓 laravel 7.1版本 blog是資料夾名稱 可以自行更改)
+   composer create-project laravel/laravel blog "7.*"
+   (Composer 會直接抓 laravel 7的最新版 blog是資料夾名稱 可以自行更改)
+   composer create-project laravel/laravel blog "8.1"
+   (Composer 會直接抓 laravel 8.1版本 blog是資料夾名稱 可以自行更改)
+   composer create-project laravel/laravel blog "8.*"
+   (Composer 會直接抓 laravel 8的最新版 blog是資料夾名稱 可以自行更改)
+

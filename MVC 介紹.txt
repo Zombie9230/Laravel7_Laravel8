@@ -1,0 +1,6 @@
+MVC 介紹
+
+Model 模型 
+View 視圖 
+Controller 控制器
+

@@ -1,0 +1,18 @@
+Laravel 7 和 Laravel 8 會員登入
+
+Larval 7 auth
+
+1. composer require laravel/ui
+
+2. php artisan ui vue --auth
+
+
+Larval 8 auth
+
+1. composer require laravel/jetstream
+
+2. php artisan jetstream:install livewire
+
+   或
+
+   php artisan jetstream:install inertia

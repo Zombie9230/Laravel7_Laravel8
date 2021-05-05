@@ -1,0 +1,48 @@
+信箱密碼登入 改成 帳號密碼登入
+
+
+1. resources/views/auth/login.blade (Email 更改 Name)
+ 
+<div class="form-group row">
+    <label for="name" class="col-md-4 col-form-label text-md-right">{{ __('Name') }}</label>
+    <div class="col-md-6">
+        <input id="name" type="name" class="form-control @error('name') is-invalid @enderror" name="name" value="{{ old('name') }}" required autocomplete="name" autofocus>
+        @error('name')
+            <span class="invalid-feedback" role="alert">
+                <strong>{{ $message }}</strong>
+            </span>
+        @enderror
+    </div>
+</div>
+
+
+2. App/Http/Controllers/Auth/LoginController.php (加上兩個function)
+
+public function name()
+{
+   return 'name';
+}
+
+protected function attemptLogin(Request $request)
+{
+   return $this->guard()->attempt(
+       $this->credentials($request), $request->filled('remember')
+   );
+}
+
+
+3. vendor/laravel/ui/auth-backend/AuthenticatesUsers.php (username 改成 name)
+
+
+protected function validateLogin(Request $request)
+{
+  $request->validate([
+     $this->name() => 'required|string',
+     'password' => 'required|string',
+  ]);
+}
+
+protected function credentials(Request $request)
+{
+   return $request->only($this->name(), 'password');
+}

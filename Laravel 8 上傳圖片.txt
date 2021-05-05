@@ -1,0 +1,67 @@
+Laravel 8 上傳圖片
+
+1. php artisan make:migration create_upload_images_table -m
+
+Schema::create('upload_images', function (Blueprint $table) {
+     $table->id();
+     $table->string('image');
+     $table->timestamps();
+});
+
+php artisan migrate
+
+2. php artisan make:model UploadImages
+
+3. 建立 Resources/view/upload/create.blade.php
+
+   <h1> Upload File</h1>
+   <form action="{{route('store')}}" method="POST" enctype="multipart/form-data">
+     @csrf
+     <input type="file" name="image">
+     <input type="submit" value="Upload">
+   </form>
+
+4. 建立 Resources/view/upload/index.blade.php
+
+   <h1> Upload OK</h1>
+   @foreach ( $UploadImage as $item)
+     <img style="width:25%" src="{{ asset('storage/images/'.$item->image)}}" alt="">
+   @endforeach
+
+
+5. php artisan make:controller UploadController
+
+    public function index()
+    {
+        $UploadImage = UploadImage::get();
+        return view('upload.index', compact('UploadImage'));
+    }
+
+    public function create()
+    {
+
+        return view('upload.create');
+    }
+
+    public function store(Request $request)
+    {
+
+        $image = $request->file('image')->getClientOriginalName();
+        $request->file('image')->storeAs('public/images/', $image);
+
+        $UploadImage = new UploadImage();
+        $UploadImage->image = $image;
+        $UploadImage->save();
+
+        return redirect('index');
+    }
+
+6. routes/web.php
+
+   use App\Http\Controllers\UploadController;
+
+   Route::get('index', [UploadController::class, 'index'])->name('index');
+   Route::get('create', [UploadController::class, 'create'])->name('create');
+   Route::post('store', [UploadController::class, 'store'])->name('store');
+
+
