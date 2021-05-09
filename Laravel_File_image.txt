@@ -1,0 +1,74 @@
+Controller 
+
+public function store(Request $request)
+{
+  $this->validate($request, [
+      'image' => 'nullable'
+  ]);
+
+  if ($request->hasFile('image')) {
+   
+  $filenameWithExt = $request->file('image')->getClientOriginalName();
+
+  $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+  $extension = $request->file('image')->getClientOriginalExtension();
+
+  $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+
+  $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+
+  } else {
+
+  $fileNameToStore = 'noimage.jpg';
+  }
+
+  $upload = new Upload;
+  $upload->image = $fileNameToStore;
+  $upload->save();
+
+  return redirect()->route('upload.index');
+}
+
+
+public function update(Request $request, $id)
+{
+  $this->validate($request, [
+     'image' => 'nullable'
+  ]);
+
+  $upload = Upload::find($id);
+
+  if ($request->hasFile('image')) {
+
+     $filenameWithExt = $request->file('image')->getClientOriginalName();
+
+     $filename = pathinfo($filenameWithExt, PATHINFO_FILENAME);
+
+     $extension = $request->file('image')->getClientOriginalExtension();
+
+     $fileNameToStore = $filename . '_' . time() . '.' . $extension;
+
+     $path = $request->file('image')->storeAs('public/images', $fileNameToStore);
+
+     Storage::delete('public/images/' . $upload->image);
+   }
+
+   if ($request->hasFile('image')) {
+
+      $upload->image = $fileNameToStore;
+    }
+
+    $upload->save();
+
+    return redirect()->route('upload.index');
+}
+
+public function delete(Upload $upload, $id)
+{
+
+     $upload = Upload::find($id);
+     $upload->delete();
+
+     return redirect()->route('upload.index');
+}
