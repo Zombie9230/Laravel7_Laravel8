@@ -2,7 +2,7 @@ Laravel 7 和 Laravel 8 會員登入
 
 Larval 7 auth
 
-1. composer require laravel/ui
+1. composer require laravel/ui or composer require laravel/ui:^2.4
 
 2. php artisan ui vue --auth
 
